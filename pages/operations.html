@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../assets/css/all.css" />
+    <link rel="stylesheet" href="../assets/css/aos.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="../assets/css/sharp-light.css" />
+    <link rel="stylesheet" href="../assets/css/sharp-regular.css" />
+    <link rel="stylesheet" href="../assets/css/sharp-solid.css" />
+    <link rel="stylesheet" href="../assets/css/sharp-thin.css" />
+    <link rel="stylesheet" href="../assets/css/sweetalert2.css" />
+    <link rel="stylesheet" href="../assets/css/operations.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header
+      class="header py-2 col-12 d-flex px-4 justify-content-between align-items-center"
+    >
+      <div class="logoAndName d-flex align-items-center">
+        <div class="logo"><img src="../assets/imgs/logo.png" alt="" /></div>
+        <div class="name fs-5 py-2 me-3 d-none d-md-block">
+          إدارة فودافون كاش
+        </div>
+      </div>
+      <div class="name fs-4" style="color: var(--titles-color)">
+        ادارة التعاملات
+      </div>
+      <div class="profile">
+        <div class="img">
+          <img src="../assets/imgs/profile.jpg" alt="" />
+        </div>
+      </div>
+    </header>
+
+    <section
+      class="main col-12 d-flex justify-content-center justify-content-lg-end  justify-content-between pe-0 pe-lg-2"
+    >
+      <div class="right-side d-none d-lg-block col-2 py-3 px-3 mt-3">
+        <div class="head col-12 text-center  border-0">فلترة العمليات</div>
+        <div
+          class="opt col-12 px-2 py-2 md-2 fs-5 d-flex align-items-center justify-content-between"
+        >
+          <span>عرض الكل</span>
+        </div>
+        <div
+          class="option down col-12 px-2 py-2 md-2 fs-5 d-flex align-items-center justify-content-between"
+        >
+          <span>عرض حسب نوع العمليه</span
+          ><i class="fa-thin fa-angle-down pe-3"></i>
+        </div>
+        <div
+          class="s-options operationTypes d-none col-12 d-block px-3 py-3 mt-1 d-none"
+        >
+          <div class="s-option col-12 s-send">عرض التحويلات فقط</div>
+          <div class="s-option col-12 s-recive mt-3">عرض المستلم فقط</div>
+        </div>
+        <div
+          class="option down col-12 px-2 py-2 md-2 fs-5 d-flex align-items-center mt-2 justify-content-between"
+        >
+          <span>عرض حسب الخط</span><i class="fa-thin fa-angle-down pe-3"></i>
+        </div>
+        <div
+          class="s-options ch-num-simCards col-12 d-block px-3 py-3 mt-1 d-none"
+        ></div>
+
+        <div
+          class="option down col-12 px-2 py-2 md-2 fs-5 d-flex align-items-center mt-2 justify-content-between"
+        >
+          <span>عرض حسب رقم العميل </span
+          ><i class="fa-thin fa-angle-down pe-3"></i>
+        </div>
+        <div class="s-options ch-cli-ope col-12 d-block px-3 py-3 mt-1 d-none">
+          <form class="col-12 d-flex justify-content-between clie-view">
+            <input type="text" placeholder="اكتب الرقم" class="col-8" />
+            <button class="col-3" type="button">عرض</button>
+          </form>
+        </div>
+
+        <div
+          class="option down col-12 px-2 py-2 md-2 fs-5 d-flex align-items-center mt-2 justify-content-between"
+        >
+          <span>عرض حسب المبلغ </span><i class="fa-thin fa-angle-down pe-3"></i>
+        </div>
+        <div
+          class="s-options ch-money-ope col-12 d-block px-3 py-3 mt-1 d-none"
+        >
+          <form class="col-12 d-flex justify-content-between money-view">
+            <input type="text" placeholder="اكتب المبلغ" class="col-8" />
+            <button class="col-3" type="button">عرض</button>
+          </form>
+        </div>
+        <div
+          class="option down col-12 px-2 py-2 md-2 fs-5 d-flex align-items-center mt-2 justify-content-between"
+        >
+          <span>عرض حسب الآجل </span><i class="fa-thin fa-angle-down pe-3"></i>
+        </div>
+        <div class="s-options ch-agl-ope col-12 d-block px-3 py-3 mt-1 d-none">
+          <form class="col-12 d-flex justify-content-between agl-view">
+            <input type="text" placeholder="اكتب الاجل" class="col-8" />
+            <button class="col-3" type="button">عرض</button>
+          </form>
+        </div>
+        <div
+          class="option down col-12 px-2 py-2 md-2 fs-5 d-flex align-items-center mt-2 justify-content-between"
+        >
+          <span>عرض حسب الدين </span><i class="fa-thin fa-angle-down pe-3"></i>
+        </div>
+        <div class="s-options ch-debt-ope col-12 d-block px-3 py-3 mt-1 d-none">
+          <form class="col-12 d-flex justify-content-between debt-view">
+            <input type="text" placeholder="اكتب الدين" class="col-8" />
+            <button class="col-3" type="button">عرض</button>
+          </form>
+        </div>
+        <div
+          class="option down col-12 px-2 py-2 md-2 fs-5 d-flex align-items-center mt-2 justify-content-between"
+        >
+          <span>عرض حسب التاريخ </span
+          ><i class="fa-thin fa-angle-down pe-3"></i>
+        </div>
+        <div class="s-options col-12 d-block px-3 py-3 mt-1 d-none">
+          <form class="col-12 d-flex justify-content-between date">
+            <input
+              type="text"
+              placeholder="اكتب المبلغ"
+              class="col-8 date-inp"
+            />
+            <button class="col-3 date-btn" type="button">عرض</button>
+          </form>
+        </div>
+
+        <div class="head col-12 text-center mt-3 py-2">التسديد</div>
+        <div
+          class="choises-box col-12 d-flex justify-content-between flex-wrap"
+        >
+          <button class="choise col-12 mt-2 py-2 aglPaid">تسديد الآجل</button>
+          <button class="choise col-12 mt-2 py-2 debtPaid">تسديد الديون</button>
+        </div>
+        <div class="head col-12 text-center mt-3 py-2">الخيارات</div>
+        <div
+          class="choises-box col-12 d-flex justify-content-between flex-wrap"
+        >
+          <button class="choise col-12 mt-2 py-2 deleteAll">حذف الكل</button>
+          <button class="choise col-12 mt-2 py-2 createReport">
+            انشاء تقرير
+          </button>
+        </div>
+      </div>
+      <div
+        class="left-side col-12 col-lg-10 d-flex flex-column align-items-center py-3"
+      >
+        <div class="add-operation col-12 d-flex flex-column align-items-center">
+          <div class="add-ope-title col-12 text-center">اضافة عمليه</div>
+          <form
+            class="col-11 col-md-8 col-lg-9 mt-2 d-flex flex-column align-items-center flex-lg-row justify-content-lg-center gap-2 px-2 px-lg-5 add-form"
+          >
+            <input
+              type="number"
+              placeholder="رقم المحل"
+              class="col-12 col-lg-2 input-click clicker"
+              data-name=""
+            />
+            <input
+              type="number"
+              placeholder="رقم العميل"
+              class="col-12 col-lg-2"
+            />
+            <input
+              type="number"
+              placeholder="المبلغ "
+              class="col-12 col-lg-2"
+            />
+            <input
+              type="text"
+              placeholder="نوع العميله "
+              class="ope-t col-12 col-lg-2"
+            />
+            <input
+              type="number"
+              placeholder="الاجل / الدين"
+              class="col-12 col-lg-2"
+            />
+            <button type="button" class="col-12 col-lg-2">
+              اضافه <i class="fa-light fa-square-plus"></i>
+            </button>
+          </form>
+          <div
+            class="simCardsShowerMain add col-12 justify-content-center align-items-center d-none"
+          >
+            <div
+              class="simCardsShower col-11 col-md-9 col-lg-6 px-3 py-2"
+            ></div>
+          </div>
+          <div
+            class="OpeShowerMain add col-12 justify-content-lg-center align-items-center d-none"
+          >
+            <div class="OpeShower col-11 col-md-9 col-lg-6 px-3 py-2">
+              <div class="item p-2 col-12 text-center mt-2" data-id="0">
+                تحويل
+              </div>
+              <div class="item p-2 col-12 text-center mt-2" data-id="1">
+                استلام
+              </div>
+            </div>
+          </div>
+          <div
+            class="edit-main col-12 d-none justify-content-center align-items-center"
+          >
+            <div class="edit-main-box col-10 col-md-7 col-lg-5 px-3 py-2">
+              <div
+                class="sim-card-edit-title text-center fs-5"
+                style="color: var(--titles-color)"
+              >
+                تعديل على العمليه
+              </div>
+              <div class="editing-form col-12 d-block px-2 py-3">
+                <label for="num">رقم المحل : </label>
+                <input type="number" id="num" id="upd-sim" class="upd-sim" />
+                <label for="client_sim">رقم العميل : </label>
+                <input type="number" id="client_sim" />
+                <label for="upd-ope">نوع العمليه : </label>
+                <input type="text" id="upd-ope-up" />
+                <label for="upd-money"> المبلغ : </label>
+                <input type="text" id="upd-money" />
+                <label for="upd-baky"> الآجل / الدين : </label>
+                <input type="number" id="upd-baky" />
+                <button class="upd">تحديث</button>
+                <button class="cls me-2">اغلاق</button>
+              </div>
+            </div>
+            <div
+              class="simCardsShowerMain edit col-12 justify-content-lg-center align-items-center d-none"
+            >
+              <div
+                class="simCardsShower col-11 col-md-9 col-lg-6 px-3 py-2"
+              ></div>
+            </div>
+            <div
+              class="OpeShowerMain edit col-12 justify-content-center align-items-center d-none"
+            >
+              <div class="OpeShower col-11 col-md-9 col-lg-6 px-3 py-2">
+                <div class="item p-2 col-12 text-center mt-2" data-id="0">
+                  تحويل
+                </div>
+                <div class="item p-2 col-12 text-center mt-2" data-id="1">
+                  استلام
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ope-title col-12 text-center mt-2">كل العمليات</div>
+          <div
+            class="ope-box-con col-12 d-flex justify-content-center flex-wrap"
+          ></div>
+        </div>
+      </div>
+      <div class="agl-given-box col-12 d-flex justify-content-center align-items-center">
+        <div class="agl-given col-11 col-md-9 col-lg-6  py-2">
+          <div class="agl-given-title text-center fs-5">استلام الآجل</div>
+          <div class="agle-given-header col-12 px-2">
+            <div class="agl-h-number"></div>
+            <div class="agl-h-money"></div>
+            <div class="agl-h-filters"></div>
+          </div>
+          <div class="agl-given-items-container col-12">
+            <div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div><div class="agl-g col-12 d-flex justify-content-between p-2 ">
+              <div class="agl-number col-3 d-flex align-items-center">
+                01090990725
+              </div>
+              <div class="agl-money col-3 d-flex justify-content-center align-items-center">
+                1200
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2">استلام جزء </button>
+                <button class="given-all me-2" agl-clicker>استلام كل</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="returner d-none">
+      <i class="fa-light fa-angle-up"></i>
+    </div>
+    <footer class="col-12 py-3 mt-2">
+      <div class="social col-12 d-flex justify-content-center">
+        <div class="faceBook ms-2">
+          <a href="https://www.facebook.com/omar.wafeek.526">
+            <img src="../assets/imgs/facebook.png" alt="" />
+          </a>
+        </div>
+        <div class="whatsApp">
+          <a href="https://wa.me/+201097178081">
+            <img src="../assets/imgs/whatsApp.png" alt="" />
+          </a>
+        </div>
+        <div class="gitHub me-2">
+          <a href="https://github.com/omaaro7">
+            <img src="../assets/imgs/github.png" alt="" />
+          </a>
+        </div>
+      </div>
+      <p class="col-12 text-center mt-2 mb-0">
+        all copy rights reverse to omar wafeek &copy;
+      </p>
+    </footer>
+
+    <script src="../assets/js/bootstrap.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/tools/sweetalert2.js"></script>
+    <script src="../assets/js/tools/sheet.js"></script>
+    <script
+      type="module"
+      src="../assets/js/tools/createDateAndTimeAndDay.js"
+    ></script>
+    <script src="../assets/js/tools/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script type="module" src="../assets/js/tools/card.js"></script>
+    <script src="../assets/js/operations.js" type="module"></script>
+  </body>
+</html>
