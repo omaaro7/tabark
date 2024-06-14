@@ -1,12 +1,11 @@
 <?php
 
-// Database connection parameters
+// Step 1: Establish a connection to your database
 $servername = "127.0.0.1";
-$username = "root"; // Your MySQL username
-$password = ""; // Your MySQL password
-$database = "tabark"; // Your MySQL database name
+$username = "root";
+$password = "";
+$database = "tabark";
 
-// Create database connection
 $conn = new mysqli($servername, $username, $password, $database);
 
 // Check connection
@@ -14,41 +13,34 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// API endpoint to get data by baky
-function getDataByBaky($baky) {
-    global $conn;
+// Step 2: Write a PHP script to query the database and fetch the required data
+$sql = "SELECT * FROM operations WHERE operationType = ? AND CAST(baky AS UNSIGNED) > 0";
+$stmt = $conn->prepare($sql);
 
-    // Sanitize input to prevent SQL injection
-    $baky = $conn->real_escape_string($baky);
-
-    // SQL query to fetch data based on baky
-    $sql = "SELECT * FROM operations WHERE baky = '$baky'";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // Fetching data row by row
-        $data = array();
-        while($row = $result->fetch_assoc()) {
-            $data[] = $row;
-        }
-        // Sending JSON response
-        header('Content-Type: application/json');
-        echo json_encode($data);
-    } else {
-        // Sending error response if no data found
-        echo "No data found";
-    }
+if (!$stmt) {
+    die("Error in preparing statement: " . $conn->error);
 }
 
-// Check if baky parameter is set in GET request
-if(isset($_GET['baky'])) {
-    $baky = $_GET['baky'];
-    getDataByBaky($baky);
-} else {
-    echo "Please provide baky parameter";
+// Assuming you're passing operationType as a parameter
+$operationType = $_GET['operationType']; // Assuming you're passing it via GET request
+
+$stmt->bind_param("s", $operationType);
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+// Step 3: Convert the `baky` column from text to a number for comparison
+$data = array();
+while ($row = $result->fetch_assoc()) {
+    $row['baky'] = (float)$row['baky']; // Convert text to number
+    $data[] = $row;
 }
 
-// Close connection
+// Step 4: Return the data in JSON format
+header('Content-Type: application/json');
+echo json_encode($data);
+
+// Close statement and connection
+$stmt->close();
 $conn->close();
-
 ?>

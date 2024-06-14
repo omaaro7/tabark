@@ -1,4 +1,4 @@
-export default function card(
+export const card = (
   id,
   simCardNumber,
   client_number,
@@ -7,7 +7,7 @@ export default function card(
   dateDay,
   time,
   baky
-) {
+) =>  {
   let opeStatues;
   let agl;
   let debt;
@@ -71,4 +71,21 @@ export default function card(
                       `;
 
   return item;
+}
+export const moneyBack = (number,money,id) => {
+  const item = `<div class="agl-g col-12 d-flex justify-content-between p-2 mt-1">
+              <div class="agl-number col-3 d-flex align-items-center">
+                ${number}
+              </div>
+              <div
+                class="agl-money col-3 d-flex justify-content-center align-items-center"
+              >
+                ${money}
+              </div>
+              <div class="agl-clickers col-3 d-flex justify-content-end">
+                <button class="given-part px-3 py-2" data-id="${id}">استلام جزء</button>
+                <button class="given-all me-2 px-3 py-2" data-id="${id}">استلام كل</button>
+              </div>
+            </div>`
+        return item
 }

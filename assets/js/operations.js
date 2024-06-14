@@ -6,7 +6,7 @@ import {
   getDateAfterOneMonth,
   getDateAfterOneWeek,
 } from "./tools/createDateAndTimeAndDay.js";
-import card from "./tools/card.js";
+import { card, moneyBack } from "./tools/card.js";
 //helping vars
 let title = document.querySelector(".ope-title");
 window.onload = () => {
@@ -23,9 +23,20 @@ window.onload = () => {
     document.querySelector(".input-click"),
     document.querySelector(".simCardsShowerMain.add")
   );
-  ret(1,"0",document.querySelector(".aglPaid"),document.querySelector(".agl-given-box"))
-  deleteAll();
+  ret(
+    "0",
+    document.querySelector(".aglPaid"),
+    document.querySelector(".agl-given-box"),
+    document.querySelector(".agl-given-box .agl-closer i")
+  );
+  ret(
+    "1",
+    document.querySelector(".debtPaid"),
+    document.querySelector(".debt-given-box"),
+    document.querySelector(".debt-given-box .debt-closer i")
+  );
 };
+deleteAll();
 function makeFilteers() {
   //edit / delete
 
@@ -648,15 +659,39 @@ function filterByDate() {
   );
 }
 //clickers
-async function ret(num, ope, clicker,box) {
-  let res = await fetch(
-    ` ../routers/operations/filtring/by_opeType.php?operationType=${ope}`
-  );
-  let data = await res.json();
-  clicker.addEventListener("click", () => {
-    box.classList.replace("d-none","d-flex")
-  })
+async function close(cl, bo) {
+  cl.addEventListener("click", () => {
+    console.log(bo);
+    console.log("omar");
+    bo.firstElementChild.lastElementChild.innerHTML = "";
+    bo.classList.replace("d-flex", "d-none");
+  });
 }
+function showByNumber(num) {}
+
+async function ret(ope, clicker, box, closer) {
+  console.log(closer);
+
+  async function dt() {
+    let res = await fetch(
+      `../routers/operations/filtring/by_baky.php?operationType=${ope}`
+    );
+    let data = await res.json();
+    let p = await data.forEach((ele) => {
+      box.firstElementChild.lastElementChild.innerHTML += moneyBack(
+        ele.client_number,
+        ele.baky,
+        ele.id
+      );
+    });
+    close(closer, box);
+  }
+  clicker.addEventListener("click", () => {
+    box.classList.replace("d-none", "d-flex");
+    dt();
+  });
+}
+
 function deleteAll() {
   let clicker = document.querySelector(".choise.deleteAll");
   clicker.addEventListener("click", (e) => {
