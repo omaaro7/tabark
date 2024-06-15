@@ -65,7 +65,7 @@
           class="edit-main col-12 d-none justify-content-center align-items-center"
         >
           <div class="edit-main-box col-10 col-md-7 col-lg-5 px-3 py-2">
-            <div class="sim-card-edit-title text-white text-center fs-5">
+            <div class="sim-card-edit-title  text-center fs-5" style="color:var(--titles-color);">
               تعديل على الخط
             </div>
             <div class="editing-form col-12 d-block px-2 py-3">

@@ -8,6 +8,7 @@ import {
 } from "./tools/createDateAndTimeAndDay.js";
 import { card, moneyBack } from "./tools/card.js";
 //helping vars
+let elem = [];
 let title = document.querySelector(".ope-title");
 window.onload = () => {
   reret();
@@ -23,19 +24,23 @@ window.onload = () => {
     document.querySelector(".input-click"),
     document.querySelector(".simCardsShowerMain.add")
   );
+};
+let aglPaid = document.querySelector(".aglPaid");
+let debtPaid = document.querySelector(".debtPaid");
+aglPaid.addEventListener("click", () => {
   ret(
     "0",
-    document.querySelector(".aglPaid"),
     document.querySelector(".agl-given-box"),
     document.querySelector(".agl-given-box .agl-closer i")
   );
+});
+debtPaid.addEventListener("click", () => {
   ret(
     "1",
-    document.querySelector(".debtPaid"),
     document.querySelector(".debt-given-box"),
     document.querySelector(".debt-given-box .debt-closer i")
   );
-};
+});
 deleteAll();
 function makeFilteers() {
   //edit / delete
@@ -668,28 +673,80 @@ async function close(cl, bo) {
   });
 }
 function showByNumber(num) {}
-
-async function ret(ope, clicker, box, closer) {
-  console.log(closer);
-
-  async function dt() {
-    let res = await fetch(
-      `../routers/operations/filtring/by_baky.php?operationType=${ope}`
-    );
-    let data = await res.json();
-    let p = await data.forEach((ele) => {
-      box.firstElementChild.lastElementChild.innerHTML += moneyBack(
-        ele.client_number,
-        ele.baky,
-        ele.id
-      );
+function setAll(clickers, tit) {
+  console.log("ds");
+  console.log(clickers);
+  clickers.forEach((ele) => {
+    ele.addEventListener("click", (e) => {
+      Swal.fire({
+        title: `${tit}`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "نعم",
+        cancelButtonText: "الغاء",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          async function task ()  {
+            let res = await fetch(
+              `../routers/operations/put_operations.php?id=${e.target.dataset.id}`,
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  baky: "0",
+                }),
+              }
+            );
+            let data = await res.json();
+            if (res.ok) {
+              Swal.fire({
+                icon: "success",
+                title: "تم بنجاح",
+              });
+            }else{
+              Swal.fire({
+                icon: "error",
+                title: "فشلت العمليه ",
+              });
+            }
+          };
+          task();
+        }
+      });
     });
-    close(closer, box);
-  }
-  clicker.addEventListener("click", () => {
-    box.classList.replace("d-none", "d-flex");
-    dt();
   });
+}
+async function dt(url, closer, box) {
+  let res = await fetch(url);
+  let data = await res.json();
+  console.log(box);
+  let p = await data.forEach((ele) => {
+    box.firstElementChild.lastElementChild.innerHTML += moneyBack(
+      ele.client_number,
+      ele.baky,
+      ele.id
+    );
+  });
+  close(closer, box);
+}
+async function ret(ope, box, closer) {
+  console.log(box);
+  console.log(closer);
+  async function end() {
+    box.classList.replace("d-none", "d-flex");
+    let wa = await dt(
+      `../routers/operations/filtring/by_baky.php?operationType=${ope}`,
+      closer,
+      box
+    );
+    elem = document.querySelectorAll(".given-all");
+    setAll(elem, "تم عملية الاستلام بنجاح");
+  }
+  end();
 }
 
 function deleteAll() {
