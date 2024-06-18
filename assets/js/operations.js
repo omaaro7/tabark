@@ -6,10 +6,16 @@ import {
   getDateAfterOneMonth,
   getDateAfterOneWeek,
 } from "./tools/createDateAndTimeAndDay.js";
-import { card, moneyBack } from "./tools/card.js";
+import { card, moneyBack, part } from "./tools/card.js";
 //helping vars
 let elem = [];
 let title = document.querySelector(".ope-title");
+function log() {
+  console.log(true);
+}
+function ca() {
+  return setPart();
+}
 window.onload = () => {
   reret();
   createOperationCards();
@@ -156,24 +162,19 @@ function sendMoneyToAllSafs(i) {
 //left section
 function showShopSimCards(clicker, box, func) {
   let items;
-
-  // Check if the event listener is already added
   if (!clicker.hasEventListener) {
-    // Add the event listener
     clicker.addEventListener("click", () => {
       box.classList.replace("d-none", "d-flex");
       box.style.zIndex = "10000";
       fetch(" ../routers/simCards/get_simCards.php")
         .then((res) => res.json())
         .then((data) => {
-          // Clear previous items
           box.firstElementChild.innerHTML = "";
           data.forEach((ele) => {
             let item = `<div class="itm p-2 col-12 text-center mt-2">${ele.number}</div>`;
             box.firstElementChild.innerHTML += item;
           });
           items = document.querySelectorAll(".itm");
-          // Add click event listener to each item
           items.forEach((ele) => {
             ele.addEventListener("click", (e) => {
               clicker.value = e.target.innerHTML;
@@ -187,8 +188,6 @@ function showShopSimCards(clicker, box, func) {
           console.error("Error fetching SIM cards:", error);
         });
     });
-
-    // Set the flag to indicate that the event listener is added
     clicker.hasEventListener = true;
   }
 }
@@ -277,6 +276,9 @@ function addOperation() {
                 sendMoneyToAllSafs("1");
                 sendMoneyToAllSafs("2");
                 sendMoneyToAllSafs("3");
+                let audio = new Audio("../assets/audio/cash.mp3");
+                audio.volume = 0.1;
+                audio.play();
                 Swal.fire({
                   title: "تمت الاضافه بنجاح",
                   icon: "success",
@@ -498,7 +500,6 @@ function gAllCards() {
     .then((res) => res.json())
     .then((data) => {
       if (data.length === 0) {
-        box.innerHTML = "omar";
       } else {
         data.forEach((ele) => {
           box.innerHTML += card(
@@ -665,14 +666,87 @@ function filterByDate() {
 }
 //clickers
 async function close(cl, bo) {
+  let audio = new Audio("../assets/audio/close.mp3");
   cl.addEventListener("click", () => {
-    console.log(bo);
-    console.log("omar");
+    audio.volume = 0.1;
+    audio.play();
     bo.firstElementChild.lastElementChild.innerHTML = "";
     bo.classList.replace("d-flex", "d-none");
   });
 }
 function showByNumber(num) {}
+function setPart(o) {
+  let msg;
+  o == "0" ? (msg = "استلام الآجل من") : (msg = "تسديد الديون الى");
+  let box = document.querySelector(".part-box-container");
+  console.log(box);
+  let clickers = document.querySelectorAll(".given-part");
+  clickers.forEach((cl) => {
+    cl.addEventListener("click", (e) => {
+      fetch(
+        `../routers/operations/get_operations.php?id=${e.target.dataset.id}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          box.classList.replace("d-none", "d-flex");
+          box.innerHTML = part(
+            msg,
+            data.client_number,
+            e.target.dataset.id,
+            data.baky
+          );
+          const inp = document.querySelector(".recivedSend");
+          const btn = document.querySelector(".part-box-form button");
+          console.log(box.innerHTML);
+          btn.addEventListener("click", (event) => {
+            Swal.fire({
+              title: "هل انت متأكد ؟",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "نعم",
+              cancelButtonText: "الغاء",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                console.log(inp);
+                fetch(
+                  `../routers/operations/put_operations.php?id=${e.target.dataset.id}`,
+                  {
+                    method: "PUT",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      baky: +data.baky - +inp.value,
+                    }),
+                  }
+                ).then((res) => {
+                  res.json();
+                  if (!res.ok) {
+                    Swal.fire({
+                      title: "حدث خطأ",
+                      icon: "error",
+                    });
+                  } else {
+                    Swal.fire({
+                      title: "تم  بنجاح",
+                      icon: "success",
+                    }).then(() => {
+                      box.classList.replace("d-flex", "d-none");
+                      e.target.parentElement.parentElement.firstElementChild.nextElementSibling.textContent =
+                        +data.baky - +inp.value;
+                    });
+                  }
+                });
+              }
+            });
+          });
+          close(document.querySelector(".part-box .closer i"), box);
+        });
+    });
+  });
+}
 function setAll(clickers, tit) {
   console.log("ds");
   console.log(clickers);
@@ -688,7 +762,7 @@ function setAll(clickers, tit) {
         cancelButtonText: "الغاء",
       }).then((result) => {
         if (result.isConfirmed) {
-          async function task ()  {
+          async function task() {
             let res = await fetch(
               `../routers/operations/put_operations.php?id=${e.target.dataset.id}`,
               {
@@ -707,20 +781,20 @@ function setAll(clickers, tit) {
                 icon: "success",
                 title: "تم بنجاح",
               });
-            }else{
+            } else {
               Swal.fire({
                 icon: "error",
                 title: "فشلت العمليه ",
               });
             }
-          };
+          }
           task();
         }
       });
     });
   });
 }
-async function dt(url, closer, box) {
+async function dt(url, closer, box, ms) {
   let res = await fetch(url);
   let data = await res.json();
   console.log(box);
@@ -728,23 +802,27 @@ async function dt(url, closer, box) {
     box.firstElementChild.lastElementChild.innerHTML += moneyBack(
       ele.client_number,
       ele.baky,
-      ele.id
+      ele.id,
+      ms
     );
   });
   close(closer, box);
 }
 async function ret(ope, box, closer) {
+  let g;
+  ope == "0" ? (g = "استلام ") : (g = " تسديد");
+  box.classList.replace("d-none", "d-flex");
   console.log(box);
   console.log(closer);
   async function end() {
-    box.classList.replace("d-none", "d-flex");
     let wa = await dt(
       `../routers/operations/filtring/by_baky.php?operationType=${ope}`,
       closer,
-      box
+      box,
+      g
     );
-    elem = document.querySelectorAll(".given-all");
-    setAll(elem, "تم عملية الاستلام بنجاح");
+    setPart(ope);
+    setAll(document.querySelectorAll(".given-all"), "هل انت متأكد؟");
   }
   end();
 }

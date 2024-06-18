@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $operationType = isset($_GET['operationType']) ? $_GET['operationType'] : '';
 
     // Fetch data from the 'operations' table where 'baky' column > 0 and 'operationType' matches
-    $query = "SELECT * FROM operations WHERE CAST(baky AS UNSIGNED) > 0 AND operationType = :operationType";
+    $query = "SELECT * FROM operations WHERE CAST(baky AS UNSIGNED) > 0 AND operationType = :operationType ORDER BY id DESC";
 
     $stmt = $conn->prepare($query);
     $stmt->bindParam(':operationType', $operationType);

@@ -7,7 +7,7 @@ export const card = (
   dateDay,
   time,
   baky
-) =>  {
+) => {
   let opeStatues;
   let agl;
   let debt;
@@ -71,8 +71,8 @@ export const card = (
                       `;
 
   return item;
-}
-export const moneyBack = (number,money,id) => {
+};
+export const moneyBack = (number, money, id,mg) => {
   const item = `<div class="agl-g col-12 d-flex justify-content-between p-2 mt-1">
               <div class="agl-number col-3 d-flex align-items-center">
                 ${number}
@@ -82,10 +82,52 @@ export const moneyBack = (number,money,id) => {
               >
                 ${money}
               </div>
-              <div class="agl-clickers col-3 d-flex justify-content-end">
-                <button class="given-part px-3 py-2" data-id="${id}">استلام جزء</button>
-                <button class="given-all me-2 px-3 py-2" data-id="${id}">استلام كل</button>
+              <div class="agl-clickers col-4 d-flex justify-content-end">
+                <button class="given-part px-3 py-2" data-id="${id}"> ${mg} جزء</button>
+                <button class="given-all me-2 px-3 py-2" data-id="${id}">${mg} الكل</button>
               </div>
-            </div>`
-        return item
-}
+            </div>`;
+  return item;
+};
+export const part = (type, num, id,baky) => {
+  const item = `
+        <div class="part-box col-11 col-md-9 col-lg-7 col-xl-5 px-2 py-3">
+          <div class="closer  position-absolute top-3">
+            <i class="fa-sharp fa-solid fa-circle-xmark"></i>
+          </div>
+          <div
+            class="part-box-title col-12 text-center fs-5 pb-2 mt-2"
+            style="color: var(--titles-color)"
+          >
+            <span>${type}</span> : <span>${num}</span>
+          </div>
+          <div class="part-box-form col-12 d-flex justify-content-around">
+            
+            <input
+              type="number"
+              placeholder="اكتب المبلغ..."
+              class="recivedSend col-5 py-1 px-2 rounded-2"
+              style="border: 2px solid var(--second-color)"
+            />
+            <div class="col-1 text-center d-flex align-items-center justify-content-center">من</div>
+            <div
+              class="main-part col-3 py-1 px-2 rounded-3 text-center"
+              style="border: 2px dashed var(--fourth-color)"
+            >${baky} جنيه</div>
+            <button
+              class="col-2 py-1 px-2 rounded-3"
+              style="
+                border: 2px solid var(--second-color);
+                background-color: var(--second-color);
+                color: var(--main-color);
+                transition: all 0.5s;
+              "
+              data-id="${id}"
+            >
+              تأكيد
+            </button>
+          </div>
+        </div>
+`;
+  return item;
+};

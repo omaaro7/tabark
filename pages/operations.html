@@ -123,7 +123,7 @@
           <form class="col-12 d-flex justify-content-between date">
             <input
               type="text"
-              placeholder="اكتب المبلغ"
+              placeholder="اكتب الباريخ"
               class="col-8 date-inp"
             />
             <button class="col-3 date-btn" type="button">عرض</button>
@@ -134,7 +134,7 @@
         <div
           class="choises-box col-12 d-flex justify-content-between flex-wrap"
         >
-          <button class="choise col-12 mt-2 py-2 aglPaid">تسديد الآجل</button>
+          <button class="choise col-12 mt-2 py-2 aglPaid">استلام الآجل</button>
           <button class="choise col-12 mt-2 py-2 debtPaid">تسديد الديون</button>
         </div>
         <div class="head col-12 text-center mt-3 py-2">الخيارات</div>
@@ -153,7 +153,7 @@
         <div class="add-operation col-12 d-flex flex-column align-items-center">
           <div class="add-ope-title col-12 text-center">اضافة عمليه</div>
           <form
-            class="col-11 col-md-8 col-lg-9 mt-2 d-flex flex-column align-items-center flex-lg-row justify-content-lg-center gap-2 px-2 px-lg-5 add-form"
+            class="col-10 col-md-11 col-lg-9 mt-2 d-flex flex-column align-items-center flex-lg-row justify-content-lg-center gap-2 px-2 px-lg-5 add-form"
           >
             <input
               type="number"
@@ -259,7 +259,9 @@
       <div
         class="agl-given-box col-12 d-none justify-content-center align-items-center"
       >
-        <div class="agl-given col-11 col-md-9 col-lg-6 py-2 pe-2 position-relative">
+        <div
+          class="agl-given col-11 col-md-9 col-lg-6 py-2 pe-2 position-relative"
+        >
           <div class="agl-closer closer position-absolute top-3">
             <i class="fa-sharp fa-solid fa-circle-xmark"></i>
           </div>
@@ -270,60 +272,75 @@
             <div class="agl-h-filters"></div>
           </div>
           <div
-              class="agl-given-filters col-12 d-flex justify-content-between px-2 py-3"
+            class="agl-given-filters col-12 d-flex justify-content-between px-2 py-3"
+          >
+            <button
+              class="agl-given-filter d-flex align-items-center justify-content-center col-3 p-2 rounded-3 border-0"
             >
-              <button
-                class="agl-given-filter d-flex align-items-center justify-content-center col-3 p-2 rounded-3 border-0"
-              >
-                 عرض حسب الرقم <i class="fa-regular fa-magnifying-glass me-2"></i></button
-              ><button
-                class="agl-given-filter d-flex align-items-center justify-content-center col-3 p-2 rounded-3 border-0"
-              >
-                عرض حسب المبلغ <i class="fa-regular fa-magnifying-glass me-2"></i></button
-              ><button
-                class="agl-given-filter d-flex align-items-center justify-content-center col-3 p-2 rounded-3 border-0"
-              >
-                عرض الكل
-              </button>
-            </div>
-          <div class="agl-given-items-container col-12">
+              عرض حسب الرقم
+              <i class="fa-regular fa-magnifying-glass me-2"></i></button
+            ><button
+              class="agl-given-filter d-flex align-items-center justify-content-center col-3 p-2 rounded-3 border-0"
+            >
+              عرض حسب المبلغ
+              <i class="fa-regular fa-magnifying-glass me-2"></i></button
+            ><button
+              class="agl-given-filter d-flex align-items-center justify-content-center col-3 p-2 rounded-3 border-0"
+            >
+              عرض الكل
+            </button>
           </div>
+          <div class="agl-given-items-container col-12"></div>
         </div>
       </div>
       <div
-      class="debt-given-box col-12 d-none justify-content-center align-items-center"
-    >
-      <div class="debt-given col-11 col-md-9 col-lg-6 py-2 pe-2 position-relative">
-        <div class="closer debt-closer position-absolute top-3">
-          <i class="fa-sharp fa-solid fa-circle-xmark"></i>
-        </div>
-        <div class="debt-given-title text-center fs-5">تسديد الديون</div>
-        <div class="debt-given-header col-12 px-2">
-          <div class="debt-h-number"></div>
-          <div class="debt-h-money"></div>
-          <div class="debt-h-filters"></div>
-        </div>
+        class="debt-given-box col-12 d-none justify-content-center align-items-center"
+      >
         <div
+          class="debt-given col-11 col-md-9 col-lg-6 py-2 pe-2 position-relative"
+        >
+          <div class="closer debt-closer position-absolute top-3">
+            <i class="fa-sharp fa-solid fa-circle-xmark"></i>
+          </div>
+          <div class="debt-given-title text-center fs-5">تسديد الديون</div>
+          <div class="debt-given-header col-12 px-2">
+            <div class="debt-h-number"></div>
+            <div class="debt-h-money"></div>
+            <div class="debt-h-filters"></div>
+          </div>
+          <div
             class="debt-given-filters col-12 d-flex justify-content-between px-2 py-3"
           >
             <button
               class="debt-given-filter d-flex align-items-center justify-content-center col-3 p-2 rounded-3 border-0"
             >
-               عرض حسب الرقم <i class="fa-regular fa-magnifying-glass me-2"></i></button
+              عرض حسب الرقم
+              <i class="fa-regular fa-magnifying-glass me-2"></i></button
             ><button
               class="debt-given-filter d-flex align-items-center justify-content-center col-3 p-2 rounded-3 border-0"
             >
-              عرض حسب المبلغ <i class="fa-regular fa-magnifying-glass me-2"></i></button
+              عرض حسب المبلغ
+              <i class="fa-regular fa-magnifying-glass me-2"></i></button
             ><button
               class="debt-given-filter d-flex align-items-center justify-content-center col-3 p-2 rounded-3 border-0"
             >
               عرض الكل
             </button>
           </div>
-        <div class="debt-given-items-container col-12">
+          <div class="debt-given-items-container col-12"></div>
         </div>
       </div>
-    </div>
+      <div
+        class="part-box-container d-none align-items-center justify-content-center col-12"
+        style="
+          position: fixed;
+          z-index: 20000;
+          background-color: rgba(0, 0, 0, 0.363);
+          top: 0;
+          left: 0;
+          height: 100%;
+        "
+      ></div>
     </section>
     <div class="returner d-none">
       <i class="fa-light fa-angle-up"></i>

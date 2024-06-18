@@ -31,7 +31,7 @@ async function setSafeAllMoney(id, pl) {
 }
 function safeItem(type, money, stat) {
   const item = `
-        <div class="pe ${stat} col-12 d-flex justify-content-between py-2 px-2">
+        <div class="pe ${stat} col-12 d-flex justify-content-between py-3 px-2 mt-1">
             <div class="pe-type ">${type}</div>
             <div class="pe-money ">${money} جنيه </div>
             </div>

@@ -126,7 +126,8 @@ form button:hover {
 .simCardsShower,
 .OpeShower,
 .agl-given,
-.debt-given {
+.debt-given,
+.part-box {
   background-color: var(--main-color);
   border-radius: 10px;
   min-height: fit-content;
@@ -136,19 +137,22 @@ form button:hover {
 .simCardsShower::-webkit-scrollbar,
 .OpeShower::-webkit-scrollbar,
 .agl-given::-webkit-scrollbar,
-.debt-given::-webkit-scrollbar {
+.debt-given::-webkit-scrollbar,
+.part-box::-webkit-scrollbar {
   width: 10px;
   background-color: transparent;
   border-radius: 3px;
 }
 .simCardsShower::-webkit-scrollbar-track,
 .OpeShower::-webkit-scrollbar-track,
+.part-box::-webkit-scrollbar-track,
 .agl-given::-webkit-scrollbar-track,
 .debt-given::-webkit-scrollbar-track {
   background-color: transparent;
 }
 .simCardsShower::-webkit-scrollbar-thumb,
 .OpeShower::-webkit-scrollbar-thumb,
+.part-box::-webkit-scrollbar-thumb,
 .agl-given::-webkit-scrollbar-thumb,
 .debt-given::-webkit-scrollbar-thumb {
   width: 100%;
@@ -158,6 +162,7 @@ form button:hover {
 }
 .OpeShower::-webkit-scrollbar-button,
 .agl-given::-webkit-scrollbar-button,
+.part-box::-webkit-scrollbar-button,
 .debt-given::-webkit-scrollbar-button {
   display: none;
 }
@@ -317,15 +322,17 @@ label {
 .choise {
   border: none;
   border-radius: 10px;
-  color: var(--titles-color);
+  color: var(--main-color);
   transition: all 0.5s;
 }
 .choise.deleteAll {
   background-color: var(--second-color);
 }
-.choise.createReport,
-.choise.debtPaid {
+.choise.createReport{
   background-color: var(--five-color);
+}
+.choise.debtPaid {
+  background-color: var(--eight-color);
 }
 .choise.exportPdf,
 .choise.aglPaid {
@@ -387,7 +394,8 @@ label {
   transform: scale(1.05);
 }
 .agl-given .closer,
-.debt-given .closer {
+.debt-given .closer,
+.part-box .closer {
   width: 30px;
   height: 30px;
   display: flex;
@@ -398,13 +406,25 @@ label {
   cursor: pointer;
 }
 .agl-given .closer i,
-.debt-given .closer i{
+.debt-given .closer i,
+.part-box .closer i{
   transition: all 0.6s;
 }
 .agl-given .closer i:hover,
-.debt-given .closer i:hover {
+.debt-given .closer i:hover,
+.part-box .closer i:hover {
   color: var(--fourth-color);
-
+}
+.recivedSend{
+  color: var(--titles-color);
+}
+.recivedSend:focus{
+  border-color:var(--eight-color)!important;
+  outline: none;
+}
+.part-box-form button:hover{
+  background-color: transparent !important;
+  color: var(--second-color) !important;
 }
 .returner {
   position: fixed;
@@ -432,10 +452,9 @@ footer {
   clear: both;
   position: relative;
   background-color: var(--thered-color);
-  color: var(--main-color);
 }
 footer p {
-  color: var(--titles-color);
+  color: var(--main-color);
 }
 footer img {
   width: 60px;
