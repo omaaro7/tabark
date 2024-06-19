@@ -10,12 +10,6 @@ import { card, moneyBack, part } from "./tools/card.js";
 //helping vars
 let elem = [];
 let title = document.querySelector(".ope-title");
-function log() {
-  console.log(true);
-}
-function ca() {
-  return setPart();
-}
 window.onload = () => {
   reret();
   createOperationCards();
@@ -501,6 +495,7 @@ function gAllCards() {
     .then((data) => {
       if (data.length === 0) {
       } else {
+        window.location = "#"
         data.forEach((ele) => {
           box.innerHTML += card(
             ele.id,
@@ -525,6 +520,7 @@ function showAllFilter() {
   });
 }
 function filterByOperationType() {
+  
   let clickers = document.querySelectorAll(".operationTypes div");
   const box = document.querySelector(".ope-box-con");
   clickers[0].addEventListener("click", () => {
@@ -552,6 +548,7 @@ function filterByOperationType() {
       );
       mkOperations();
     });
+    window.location = "#";
     title.textContent = `عمليات ${oper}`;
   }
 }
@@ -580,6 +577,7 @@ function filterBySimCard(nums) {
   }
   nums.forEach((ele, index) => {
     ele.addEventListener("click", (e) => {
+      window.location = "#"
       getBysim(e.target.textContent.trim());
     });
   });
@@ -589,6 +587,7 @@ function filterBySimCard(nums) {
 function inputs_filter(inp, url, button, tit) {
   let box = document.querySelector(".ope-box-con");
   button.addEventListener("click", (e) => {
+    window.location = "#"
     async function get() {
       let res = await fetch(`${url}${inp.value}`);
       let data = await res.json();

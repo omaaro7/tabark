@@ -32,6 +32,8 @@ body {
 }
 .header {
   background-color: var(--main-color);
+  max-height: 10vh;
+  box-shadow: -20px 4px 1px 1px #0000003d;
 }
 .logoAndName .logo img {
   width: 50;
@@ -45,14 +47,19 @@ body {
   height: 50px;
   border-radius: 50%;
 }
-
+.main {
+  min-height: 90vh;
+}
 .main .right-side {
-  height: fit-content;
+  max-height: 80%;
   background-color: var(--main-color);
   border: 2px solid var(--fourth-color);
   border-radius: 10px;
-
   position: sticky;
+  font-size: 17px;
+  position: fixed;
+  overflow-y: scroll;
+  right: 0;
 }
 .option,
 .opt {
@@ -143,10 +150,14 @@ form button:hover {
   background-color: transparent;
   border-radius: 3px;
 }
+.main .right-side::-webkit-scrollbar {
+  width: 5px;
+}
 .simCardsShower::-webkit-scrollbar-track,
 .OpeShower::-webkit-scrollbar-track,
 .part-box::-webkit-scrollbar-track,
 .agl-given::-webkit-scrollbar-track,
+.main .right-side::-webkit-scrollbar-track,
 .debt-given::-webkit-scrollbar-track {
   background-color: transparent;
 }
@@ -154,15 +165,20 @@ form button:hover {
 .OpeShower::-webkit-scrollbar-thumb,
 .part-box::-webkit-scrollbar-thumb,
 .agl-given::-webkit-scrollbar-thumb,
+.main .right-side::-webkit-scrollbar-thumb,
 .debt-given::-webkit-scrollbar-thumb {
   width: 100%;
   height: 30%;
   background-color: #6886bd;
   border-radius: 10px;
 }
+.main .right-side::-webkit-scrollbar-thumb {
+  background-color: var(--fourth-color);
+}
 .OpeShower::-webkit-scrollbar-button,
 .agl-given::-webkit-scrollbar-button,
 .part-box::-webkit-scrollbar-button,
+.main .right-side::-webkit-scrollbar-button,
 .debt-given::-webkit-scrollbar-button {
   display: none;
 }
@@ -232,6 +248,7 @@ label {
   background-color: var(--main-color);
   border-radius: 10px;
   transition: all 0.5s;
+  font-size: 1em;
 }
 .ope:hover {
   transform: scale(1.05);
@@ -328,7 +345,7 @@ label {
 .choise.deleteAll {
   background-color: var(--second-color);
 }
-.choise.createReport{
+.choise.createReport {
   background-color: var(--five-color);
 }
 .choise.debtPaid {
@@ -407,7 +424,7 @@ label {
 }
 .agl-given .closer i,
 .debt-given .closer i,
-.part-box .closer i{
+.part-box .closer i {
   transition: all 0.6s;
 }
 .agl-given .closer i:hover,
@@ -415,14 +432,14 @@ label {
 .part-box .closer i:hover {
   color: var(--fourth-color);
 }
-.recivedSend{
+.recivedSend {
   color: var(--titles-color);
 }
-.recivedSend:focus{
-  border-color:var(--eight-color)!important;
+.recivedSend:focus {
+  border-color: var(--eight-color) !important;
   outline: none;
 }
-.part-box-form button:hover{
+.part-box-form button:hover {
   background-color: transparent !important;
   color: var(--second-color) !important;
 }
@@ -459,6 +476,34 @@ footer p {
 footer img {
   width: 60px;
   height: 60px;
+}
+@media (min-width: 1000px) and (max-width: 1500px) {
+  .ope-container {
+    width: 33.33333% !important;
+  }
+  form {
+    font-size: 0.9em;
+  }
+  button {
+    font-size: 0.9em;
+  }
+  .add-operation form {
+    width: 85% !important;
+  }
+
+  .ope button {
+    font-size: 1em;
+  }
+  .right-side{
+    width: 20% !important;
+    height: 74%;
+  }
+  .left-side{
+    width: 80% !important;
+  }
+  footer{
+    margin-top: 50px !important;
+  }
 }
 @font-face {
   font-family: main_font;
