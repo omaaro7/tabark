@@ -70,11 +70,13 @@ body {
 }
 .option:hover,
 .opt:hover {
+  transform: scale(1) !important;
   background-color: var(--fourth-color);
 }
 .s-options {
   background-color: var(--background-color);
   border-radius: 10px;
+  border: 1px solid var(--fourth-color);
 }
 .s-options .s-option {
   font-size: 14px;
@@ -93,7 +95,8 @@ form {
   background-color: var(--second-color);
   border-radius: 10px;
 }
-form input {
+form input,
+.show-number-form input {
   background-color: var(--main-color);
   padding: 7px 7px;
   color: var(--titles-color);
@@ -129,17 +132,22 @@ form button:hover {
   background-color: rgba(0, 0, 0, 0.468);
   top: 0;
   right: 0;
+  z-index: 1500;
 }
 .simCardsShower,
 .OpeShower,
 .agl-given,
 .debt-given,
-.part-box {
+.part-box,
+.show-number {
   background-color: var(--main-color);
   border-radius: 10px;
   min-height: fit-content;
   max-height: 70%;
   overflow-y: scroll;
+}
+.show-number{
+  overflow: hidden;
 }
 .simCardsShower::-webkit-scrollbar,
 .OpeShower::-webkit-scrollbar,
@@ -329,9 +337,12 @@ label {
 }
 .option:hover,
 .o:hover {
-  transform: scale(1.05);
+  transform: scale(1.05) ;
 }
+.bt:hover{
+  transform: scale(1.05) !important;
 
+}
 .head {
   color: var(--titles-color);
   border-top: 3px solid var(--fourth-color);
@@ -361,10 +372,7 @@ label {
 .choise:hover {
   transform: scale(1.05);
 }
-.agl-given-filters,
-.deb-given-filters {
-  border-bottom: 2px solid var(--fourth-color);
-}
+
 .agl-given-filters button,
 .debt-given-filters button {
   background-color: var(--fourth-color);
@@ -412,7 +420,8 @@ label {
 }
 .agl-given .closer,
 .debt-given .closer,
-.part-box .closer {
+.part-box .closer,
+.show-number .closer {
   width: 30px;
   height: 30px;
   display: flex;
@@ -424,13 +433,30 @@ label {
 }
 .agl-given .closer i,
 .debt-given .closer i,
-.part-box .closer i {
+.part-box .closer i,
+.show-number .closer i {
   transition: all 0.6s;
 }
 .agl-given .closer i:hover,
 .debt-given .closer i:hover,
-.part-box .closer i:hover {
+.part-box .closer i:hover,
+.show-number .closer i:hover {
   color: var(--fourth-color);
+}
+.show-number-form button{
+  border: 2px solid var(--second-color);
+  background-color: var(--second-color);
+  color: var(--main-color);
+  transition: all 0.6s;
+}
+.show-number-form input{
+  border: 2px solid var(--second-color);
+}
+.show-number-form input:focus{
+  outline: none;
+  border-color: var(--eight-color);
+}.show-number-form input::placeholder{
+  color:var(--seven-color);
 }
 .recivedSend {
   color: var(--titles-color);
@@ -439,6 +465,7 @@ label {
   border-color: var(--eight-color) !important;
   outline: none;
 }
+.show-number-form button:hover,
 .part-box-form button:hover {
   background-color: transparent !important;
   color: var(--second-color) !important;

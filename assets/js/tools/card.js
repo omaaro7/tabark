@@ -59,10 +59,10 @@ export const card = (
                           <div
                             class="options-container col-12 d-flex justify-content-between flex-wrap mt-3"
                           >
-                            <button class="option col-12 col-md-5 mt-2 edit" data-id="${id}">
+                            <button class="option bt col-12 col-md-5 mt-2 edit" data-id="${id}">
                               تعديل
                             </button>
-                            <button class="o col-12 col-md-5 mt-2 delete" data-id="${id}">
+                            <button class="o bt col-12 col-md-5 mt-2 delete" data-id="${id}">
                               حذف
                             </button>
                           </div>
@@ -131,3 +131,20 @@ export const part = (type, num, id,baky) => {
 `;
   return item;
 };
+export const moneyBackSearch = (moneyType , searchType,searchTitle) => {
+  const item = `
+    <div class="show-number col-11 col-md-9 col-lg-6 py-3 px-2">
+          <div class="closer position-absolute top-3">
+            <i class="fa-sharp fa-solid fa-circle-xmark"></i>
+          </div>
+          <div class="show-number-title col-12 text-center mt-2 fs-5">بحث عن ${moneyType} ${searchType}</div>
+          <div class="show-number-form col-12 mt-2 d-flex justify-content-between">
+            <input type="number" class="show-number-input col-9 py-1" placeholder="${searchTitle}... "/>
+            <button type="button" class="col-2 show-number button py-1">
+              اظهار
+            </button>
+          </div>
+        </div>
+  `
+  return item
+}

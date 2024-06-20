@@ -1,3 +1,4 @@
+//import libraries
 import {
   getCurrentDate,
   getDateAfterOneDay,
@@ -6,9 +7,11 @@ import {
   getDateAfterOneMonth,
   getDateAfterOneWeek,
 } from "./tools/createDateAndTimeAndDay.js";
-import { card, moneyBack, part } from "./tools/card.js";
+import { card, moneyBack, part, moneyBackSearch } from "./tools/card.js";
+//import sounds
+let adding = new Audio("../assets/audio/cash.mp3");
+let closing = new Audio("../assets/audio/close.mp3");
 //helping vars
-let elem = [];
 let title = document.querySelector(".ope-title");
 window.onload = () => {
   reret();
@@ -270,9 +273,9 @@ function addOperation() {
                 sendMoneyToAllSafs("1");
                 sendMoneyToAllSafs("2");
                 sendMoneyToAllSafs("3");
-                let audio = new Audio("../assets/audio/cash.mp3");
-                audio.volume = 0.1;
-                audio.play();
+
+                adding.volume = 0.1;
+                adding.play();
                 Swal.fire({
                   title: "تمت الاضافه بنجاح",
                   icon: "success",
@@ -495,7 +498,7 @@ function gAllCards() {
     .then((data) => {
       if (data.length === 0) {
       } else {
-        window.location = "#"
+        window.location = "#";
         data.forEach((ele) => {
           box.innerHTML += card(
             ele.id,
@@ -520,7 +523,6 @@ function showAllFilter() {
   });
 }
 function filterByOperationType() {
-  
   let clickers = document.querySelectorAll(".operationTypes div");
   const box = document.querySelector(".ope-box-con");
   clickers[0].addEventListener("click", () => {
@@ -577,7 +579,8 @@ function filterBySimCard(nums) {
   }
   nums.forEach((ele, index) => {
     ele.addEventListener("click", (e) => {
-      window.location = "#"
+      window.location = "#";
+      title.textContent = `كل العمليات على الخط  : ${e.target.textContent}`;
       getBysim(e.target.textContent.trim());
     });
   });
@@ -587,7 +590,7 @@ function filterBySimCard(nums) {
 function inputs_filter(inp, url, button, tit) {
   let box = document.querySelector(".ope-box-con");
   button.addEventListener("click", (e) => {
-    window.location = "#"
+    window.location = "#";
     async function get() {
       let res = await fetch(`${url}${inp.value}`);
       let data = await res.json();
@@ -620,7 +623,7 @@ function filterByClientNumber() {
     input,
     ` ../routers/operations/filtring/by_clientNum.php?client_number=`,
     btn,
-    `كل التعاملات على رثم العميل `
+    `كل التعاملات على رقم العميل `
   );
 }
 function filterByMoney() {
@@ -664,16 +667,31 @@ function filterByDate() {
   );
 }
 //clickers
-async function close(cl, bo) {
-  let audio = new Audio("../assets/audio/close.mp3");
+async function close(cl, bo, stat) {
   cl.addEventListener("click", () => {
-    audio.volume = 0.1;
-    audio.play();
-    bo.firstElementChild.lastElementChild.innerHTML = "";
+    closing.volume = 0.1;
+    closing.play();
+    stat == true
+      ? (bo.firstElementChild.lastElementChild.innerHTML = "")
+      : console.log(false);
+
     bo.classList.replace("d-flex", "d-none");
   });
 }
-function showByNumber(num) {}
+function moneyBackSearchControler(moneyType, searchType, SearchTitle) {
+  let box = document.querySelector(".show-number-container");
+  console.log(box);
+  box.classList.replace("d-none", "d-flex");
+  box.innerHTML = moneyBackSearch(moneyType, searchType, SearchTitle);
+  console.log(box);
+  const searchInput = document.querySelector(".shower-number-form input");
+  const searchButton = document.querySelector(".shower-number-form button");
+  close(
+    document.querySelector(".show-number-container .closer i"),
+    document.querySelector(".show-number-container"),
+    false
+  );
+}
 function setPart(o) {
   let msg;
   o == "0" ? (msg = "استلام الآجل من") : (msg = "تسديد الديون الى");
@@ -735,13 +753,16 @@ function setPart(o) {
                       box.classList.replace("d-flex", "d-none");
                       e.target.parentElement.parentElement.firstElementChild.nextElementSibling.textContent =
                         +data.baky - +inp.value;
+                      if (+data.baky - +inp.value == 0)
+                        e.target.parentElement.parentElement.remove();
+                      gAllCards();
                     });
                   }
                 });
               }
             });
           });
-          close(document.querySelector(".part-box .closer i"), box);
+          close(document.querySelector(".part-box .closer i"), box, true);
         });
     });
   });
@@ -779,6 +800,9 @@ function setAll(clickers, tit) {
               Swal.fire({
                 icon: "success",
                 title: "تم بنجاح",
+              }).then(() => {
+                e.target.parentElement.parentElement.remove();
+                gAllCards();
               });
             } else {
               Swal.fire({
@@ -805,11 +829,15 @@ async function dt(url, closer, box, ms) {
       ms
     );
   });
-  close(closer, box);
+  close(closer, box, true);
 }
 async function ret(ope, box, closer) {
   let g;
+  let searchType;
+  let moneyType;
+  let searchTitle;
   ope == "0" ? (g = "استلام ") : (g = " تسديد");
+  ope == "0" ? (moneyType = "آجل ") : (moneyType = "ديون");
   box.classList.replace("d-none", "d-flex");
   console.log(box);
   console.log(closer);
@@ -820,6 +848,21 @@ async function ret(ope, box, closer) {
       box,
       g
     );
+    let eles = Array.from(
+      box.firstElementChild.lastElementChild.previousElementSibling.children
+    );
+    eles.map((ele, index) => {
+      ele.addEventListener("click", (e) => {
+        index == 0
+          ? (searchType = "برقم العميل")
+          : (searchType = `بقيمة ال${moneyType}`);
+        index == 0
+          ? (searchTitle = "رقم العميل")
+          : (searchTitle = `قيمة ${searchType}`);
+
+        moneyBackSearchControler(moneyType, searchType, searchTitle);
+      });
+    });
     setPart(ope);
     setAll(document.querySelectorAll(".given-all"), "هل انت متأكد؟");
   }
