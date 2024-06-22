@@ -685,38 +685,65 @@ async function moneyBackSearchControler(
   ope,
   retBox,
   ms,
-  url
+  ind
 ) {
-  let box = document.querySelector(".show-number-container");
-  console.log(box);
-  box.classList.replace("d-none", "d-flex");
-  box.innerHTML = moneyBackSearch(moneyType, searchType, SearchTitle);
-  console.log(box);
-  const searchInput = document.querySelector(".show-number-form input");
-  const searchButton = document.querySelector(".show-number-form button");
-  searchButton.addEventListener("click", async () => {
-    const res = await fetch(
-      `../routers/operations/filtring/by_clientNumAndBaky.php?client_number=${searchInput.value.trim()}&operationType=${ope}`
-    );
-    const data = await res.json();
-    console.log(data);
-    searchInput.value = "";
-    box.classList.replace("d-flex", "d-none");
-    retBox.firstElementChild.lastElementChild.innerHTML = "";
-    let t = await data.forEach((ele) => {
-      retBox.firstElementChild.lastElementChild.innerHTML += moneyBack(
-        ele.client_number,
-        ele.baky,
-        ele.id,
-        ms
+  if (ind < 2) {
+    let url = ``;
+    let parameter = "";
+    if (ind == 0) {
+      url = `../routers/operations/filtring/by_clientNumAndBaky.php`;
+      parameter = "client_number";
+    }
+    if (ind == 1) {
+      url = `../routers/operations/filtring/by_operationTypeAndBaky.php`;
+      parameter = "baky";
+    }
+    let box = document.querySelector(".show-number-container");
+    console.log(box);
+    box.classList.replace("d-none", "d-flex");
+    box.innerHTML = moneyBackSearch(moneyType, searchType, SearchTitle);
+    console.log(box);
+    const searchInput = document.querySelector(".show-number-form input");
+    const searchButton = document.querySelector(".show-number-form button");
+    searchButton.addEventListener("click", async () => {
+      const res = await fetch(
+        `${url}?${parameter}=${searchInput.value.trim()}&operationType=${ope}`
       );
+      const data = await res.json();
+      console.log(data);
+      searchInput.value = "";
+      box.classList.replace("d-flex", "d-none");
+      retBox.firstElementChild.lastElementChild.innerHTML = "";
+      let maping = await data.forEach((ele) => {
+        retBox.firstElementChild.lastElementChild.innerHTML += moneyBack(
+          ele.client_number,
+          ele.baky,
+          ele.id,
+          ms
+        );
+      });
     });
-  });
-  close(
-    document.querySelector(".show-number-container .closer i"),
-    document.querySelector(".show-number-container"),
-    false
-  );
+    close(
+      document.querySelector(".show-number-container .closer i"),
+      document.querySelector(".show-number-container"),
+      false
+    );
+  } else {
+    async function gAllBaky () {
+      const res = await fetch(`../routers/operations/filtring/by_baky.php?operationType=${ope}`)
+      const data = await res.json()
+      retBox.firstElementChild.lastElementChild.innerHTML = ""
+      const maping = data.map((ele) => {
+        retBox.firstElementChild.lastElementChild.innerHTML += moneyBack(
+          ele.client_number,
+          ele.baky,
+          ele.id,
+          ms
+        );
+      })
+    }
+    gAllBaky()
+  }
 }
 function setPart(o) {
   let msg;
@@ -862,7 +889,6 @@ async function ret(ope, box, closer) {
   let searchType;
   let moneyType;
   let searchTitle;
-  let url;
   ope == "0" ? (g = "استلام ") : (g = " تسديد");
   ope == "0" ? (moneyType = "آجل ") : (moneyType = "ديون");
   box.classList.replace("d-none", "d-flex");
@@ -883,14 +909,10 @@ async function ret(ope, box, closer) {
         if (index == 0) {
           searchType = "برقم العميل";
           searchTitle = "رقم العميل";
-          url = `../routers/operations/filtring/by_clientNumAndBaky.php?client_number=${searchInput.value.trim()}&operationType=${ope}`
         }
         if (index == 1) {
           searchType = `بقيمة ال${moneyType}`;
           searchTitle = `قيمة ال${moneyType}`;
-        }
-        if (index == 2) {
-          window.location.reload();
         }
         moneyBackSearchControler(
           moneyType,
@@ -898,7 +920,8 @@ async function ret(ope, box, closer) {
           searchTitle,
           ope,
           box,
-          g
+          g,
+          index
         );
       });
     });
