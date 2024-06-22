@@ -678,14 +678,40 @@ async function close(cl, bo, stat) {
     bo.classList.replace("d-flex", "d-none");
   });
 }
-function moneyBackSearchControler(moneyType, searchType, SearchTitle) {
+async function moneyBackSearchControler(
+  moneyType,
+  searchType,
+  SearchTitle,
+  ope,
+  retBox,
+  ms,
+  url
+) {
   let box = document.querySelector(".show-number-container");
   console.log(box);
   box.classList.replace("d-none", "d-flex");
   box.innerHTML = moneyBackSearch(moneyType, searchType, SearchTitle);
   console.log(box);
-  const searchInput = document.querySelector(".shower-number-form input");
-  const searchButton = document.querySelector(".shower-number-form button");
+  const searchInput = document.querySelector(".show-number-form input");
+  const searchButton = document.querySelector(".show-number-form button");
+  searchButton.addEventListener("click", async () => {
+    const res = await fetch(
+      `../routers/operations/filtring/by_clientNumAndBaky.php?client_number=${searchInput.value.trim()}&operationType=${ope}`
+    );
+    const data = await res.json();
+    console.log(data);
+    searchInput.value = "";
+    box.classList.replace("d-flex", "d-none");
+    retBox.firstElementChild.lastElementChild.innerHTML = "";
+    let t = await data.forEach((ele) => {
+      retBox.firstElementChild.lastElementChild.innerHTML += moneyBack(
+        ele.client_number,
+        ele.baky,
+        ele.id,
+        ms
+      );
+    });
+  });
   close(
     document.querySelector(".show-number-container .closer i"),
     document.querySelector(".show-number-container"),
@@ -836,6 +862,7 @@ async function ret(ope, box, closer) {
   let searchType;
   let moneyType;
   let searchTitle;
+  let url;
   ope == "0" ? (g = "استلام ") : (g = " تسديد");
   ope == "0" ? (moneyType = "آجل ") : (moneyType = "ديون");
   box.classList.replace("d-none", "d-flex");
@@ -853,14 +880,26 @@ async function ret(ope, box, closer) {
     );
     eles.map((ele, index) => {
       ele.addEventListener("click", (e) => {
-        index == 0
-          ? (searchType = "برقم العميل")
-          : (searchType = `بقيمة ال${moneyType}`);
-        index == 0
-          ? (searchTitle = "رقم العميل")
-          : (searchTitle = `قيمة ${searchType}`);
-
-        moneyBackSearchControler(moneyType, searchType, searchTitle);
+        if (index == 0) {
+          searchType = "برقم العميل";
+          searchTitle = "رقم العميل";
+          url = `../routers/operations/filtring/by_clientNumAndBaky.php?client_number=${searchInput.value.trim()}&operationType=${ope}`
+        }
+        if (index == 1) {
+          searchType = `بقيمة ال${moneyType}`;
+          searchTitle = `قيمة ال${moneyType}`;
+        }
+        if (index == 2) {
+          window.location.reload();
+        }
+        moneyBackSearchControler(
+          moneyType,
+          searchType,
+          searchTitle,
+          ope,
+          box,
+          g
+        );
       });
     });
     setPart(ope);
