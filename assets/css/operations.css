@@ -92,7 +92,7 @@ body {
 }
 form {
   padding: 10px 5px;
-  background-color: var(--second-color);
+  background-color: var(--fourth-color);
   border-radius: 10px;
 }
 form input,
@@ -112,8 +112,8 @@ form input::placeholder {
   color: var(--titles-color);
 }
 form button {
-  background-color: var(--fourth-color);
-  border: 2px solid var(--fourth-color);
+  background-color: var(--eight-color);
+  border: 2px solid var(--eight-color);
   color: var(--titles-color);
   padding: 7px 0;
   border-radius: 5px;
@@ -121,7 +121,6 @@ form button {
 }
 form button:hover {
   background-color: transparent;
-  color: var(--fourth-color);
 }
 .simCardsShowerMain,
 .OpeShowerMain,
