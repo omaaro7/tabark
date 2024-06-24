@@ -102,27 +102,43 @@ async function createOperationCards() {
 
 //safes managment
 function sendMoneyToAllSafs(i) {
+  function manageDates(date, value) {
+    let DateString = date;
+    var parts = DateString.split("/");
+    var Month = parseInt(parts[0], 10);
+    var Day = parseInt(parts[1], 10);
+    var Year = parseInt(parts[2], 10);
+    var dateObject = new Date(Year, Month - 1, Day);
+    var customDateObject = dateObject.setDate(dateObject.getDate() + value);
+    var StartnumericValue = dateObject.getTime();
+    return [StartnumericValue, customDateObject];
+  }
   fetch(` ../routers/safes/get_safe.php?id=${i}`)
     .then((res) => res.json())
     .then((data) => {
       let startDate = data.startDate;
       let endDate = data.endDate;
+      var StartnumericValue = manageDates(data.startDate, 0)[0];
+      console.log(StartnumericValue);
+      var endnumericValue = manageDates(data.endDate, 0)[0];
+      console.log(endnumericValue);
       console.log(endDate, data.endDate);
+      const After = manageDates(getCurrentDate(), 0)[0];
       const day = () => {
-        if (endDate == getCurrentDate()) {
+        if (After == endnumericValue || After > endnumericValue) {
           startDate = getCurrentDate();
           endDate = getDateAfterOneDay();
         }
       };
       const week = () => {
-        if (endDate == getCurrentDate()) {
-          startDate = endDate;
+        if (After == endnumericValue || After > endnumericValue) {
+          startDate = getCurrentDate();
           endDate = getDateAfterOneWeek();
         }
       };
       const month = () => {
-        if (endDate == getCurrentDate()) {
-          startDate = endDate;
+        if (After == endnumericValue || After > endnumericValue) {
+          startDate = getCurrentDate();
           endDate = getDateAfterOneMonth();
         }
       };
@@ -729,10 +745,12 @@ async function moneyBackSearchControler(
       false
     );
   } else {
-    async function gAllBaky () {
-      const res = await fetch(`../routers/operations/filtring/by_baky.php?operationType=${ope}`)
-      const data = await res.json()
-      retBox.firstElementChild.lastElementChild.innerHTML = ""
+    async function gAllBaky() {
+      const res = await fetch(
+        `../routers/operations/filtring/by_baky.php?operationType=${ope}`
+      );
+      const data = await res.json();
+      retBox.firstElementChild.lastElementChild.innerHTML = "";
       const maping = data.map((ele) => {
         retBox.firstElementChild.lastElementChild.innerHTML += moneyBack(
           ele.client_number,
@@ -740,9 +758,9 @@ async function moneyBackSearchControler(
           ele.id,
           ms
         );
-      })
+      });
     }
-    gAllBaky()
+    gAllBaky();
   }
 }
 function setPart(o) {
