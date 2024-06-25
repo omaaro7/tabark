@@ -21,8 +21,6 @@ $client_number = $_GET['client_number'];
 $sql = "SELECT * FROM operations WHERE client_number = $client_number";
 
 $result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
     // Fetching data row by row
     $data = array();
     while($row = $result->fetch_assoc()) {
@@ -31,10 +29,6 @@ if ($result->num_rows > 0) {
     // Sending JSON response
     header('Content-Type: application/json');
     echo json_encode($data);
-} else {
-    // Sending error response if no data found
-    echo "No data found";
-}
 
 // Close connection
 $conn->close();

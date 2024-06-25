@@ -25,17 +25,13 @@ if (isset($_GET['simCardNumber'])) {
     $result = mysqli_query($conn, $sql);
 
     // Check if there are any results
-    if (mysqli_num_rows($result) > 0) {
         // Fetch data from the result set
         $operations = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         // Output data as JSON
         header('Content-Type: application/json');
         echo json_encode($operations);
-    } else {
-        // No data found for the provided simCardNumber
-        echo json_encode([]);
-    }
+
 } else {
     // simCardNumber parameter is missing in the URL
     echo json_encode(array("error" => "simCardNumber parameter is required"));

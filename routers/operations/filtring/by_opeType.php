@@ -22,20 +22,14 @@ $sql = "SELECT * FROM operations WHERE operationType = '$operationType'";
 
 $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-    // Fetching data row by row
-    $data = array();
-    while($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
-    // Sending JSON response
-    header('Content-Type: application/json');
-    echo json_encode($data);
-} else {
-    // Sending error response if no data found
-    echo "No data found";
+// Fetching data row by row
+$data = array();
+while ($row = $result->fetch_assoc()) {
+    $data[] = $row;
 }
-
+// Sending JSON response
+header('Content-Type: application/json');
+echo json_encode($data);
 // Close connection
 $conn->close();
 

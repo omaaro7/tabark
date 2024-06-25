@@ -7,7 +7,7 @@ import {
   getDateAfterOneMonth,
   getDateAfterOneWeek,
 } from "./tools/createDateAndTimeAndDay.js";
-import { card, moneyBack, part, moneyBackSearch } from "./tools/card.js";
+import { card, moneyBack, part, moneyBackSearch, nores } from "./tools/card.js";
 //import sounds
 let adding = new Audio("../assets/audio/cash.mp3");
 let closing = new Audio("../assets/audio/close.mp3");
@@ -25,7 +25,9 @@ window.onload = () => {
   );
   showShopSimCards(
     document.querySelector(".input-click"),
-    document.querySelector(".simCardsShowerMain.add")
+    document.querySelector(".simCardsShowerMain.add"),
+    null,
+    "add"
   );
 };
 let aglPaid = document.querySelector(".aglPaid");
@@ -82,7 +84,9 @@ async function createOperationCards() {
   let box = document.querySelector(".ope-box-con");
   let res = await fetch(" ../routers/operations/get_operations.php");
   let data = await res.json();
-
+  if (data.length == 0) {
+    noRes(box, "لا يوجد اي عمليه");
+  }
   let each = await data.forEach((ele, index) => {
     box.innerHTML += card(
       ele.id,
@@ -173,7 +177,10 @@ function sendMoneyToAllSafs(i) {
 }
 
 //left section
-function showShopSimCards(clicker, box, func) {
+function noRes(box, text) {
+  box.innerHTML = nores(text);
+}
+function showShopSimCards(clicker, box, func, t) {
   let items;
   if (!clicker.hasEventListener) {
     clicker.addEventListener("click", () => {
@@ -182,20 +189,24 @@ function showShopSimCards(clicker, box, func) {
       fetch(" ../routers/simCards/get_simCards.php")
         .then((res) => res.json())
         .then((data) => {
-          box.firstElementChild.innerHTML = "";
+          box.firstElementChild.lastElementChild.innerHTML = "";
           data.forEach((ele) => {
             let item = `<div class="itm p-2 col-12 text-center mt-2">${ele.number}</div>`;
-            box.firstElementChild.innerHTML += item;
+            box.firstElementChild.lastElementChild.innerHTML += item;
           });
+          if (data.length == 0) {
+            noRes(box.firstElementChild.lastElementChild, "لم يتم اضافة خطوط");
+          }
           items = document.querySelectorAll(".itm");
           items.forEach((ele) => {
             ele.addEventListener("click", (e) => {
               clicker.value = e.target.innerHTML;
-              box.firstElementChild.innerHTML = "";
+              box.firstElementChild.lastElementChild.innerHTML = "";
               box.classList.replace("d-flex", "d-none");
               func;
             });
           });
+          close(document.querySelector(`.simCards-closer-${t} i`), box, false);
         })
         .catch((error) => {
           console.error("Error fetching SIM cards:", error);
@@ -403,7 +414,8 @@ function editOperation() {
           showShopSimCards(
             document.querySelector(".upd-sim"),
             document.querySelector(".simCardsShowerMain.edit"),
-            sendData()
+            sendData(),
+            "edit"
           );
           showOpeType(
             document.querySelector("#upd-ope-up"),
@@ -470,6 +482,9 @@ function putSimCardsNumbers() {
     .then((res) => res.json())
     .then((data) => {
       let simsC;
+      if (data.length == 0) {
+        noRes(box, "لا يوجد خطوط");
+      }
       data.map((ele, index) => {
         let mt = "";
         index == 0 ? (mt = "0") : (mt = "2");
@@ -513,6 +528,7 @@ function gAllCards() {
     .then((res) => res.json())
     .then((data) => {
       if (data.length === 0) {
+        noRes(box, "لا يوجد اي عمليات");
       } else {
         window.location = "#";
         data.forEach((ele) => {
@@ -542,10 +558,10 @@ function filterByOperationType() {
   let clickers = document.querySelectorAll(".operationTypes div");
   const box = document.querySelector(".ope-box-con");
   clickers[0].addEventListener("click", () => {
-    getOpeData(0, " التحويل : ");
+    getOpeData(0, " التحويل");
   });
   clickers[1].addEventListener("click", () => {
-    getOpeData(1, " الاستلام :");
+    getOpeData(1, " الاستلام");
   });
   async function getOpeData(opo, oper) {
     box.innerHTML = "";
@@ -566,8 +582,15 @@ function filterByOperationType() {
       );
       mkOperations();
     });
+    if (data.length == 0) {
+      const text = Array.from(oper);
+      text.shift();
+      text.shift();
+      text.shift();
+      noRes(box, `لا توجد عمليات ${text.join("")}`);
+    }
     window.location = "#";
-    title.textContent = `عمليات ${oper}`;
+    title.textContent = `عمليات : ${oper}`;
   }
 }
 function filterBySimCard(nums) {
@@ -590,6 +613,9 @@ function filterBySimCard(nums) {
             ele.baky
           );
         });
+        if (data.length == 0) {
+          noRes(box, `لا توجد اي عمليات على هذا الخط`);
+        }
         mkOperations();
       });
   }
@@ -603,7 +629,7 @@ function filterBySimCard(nums) {
 }
 
 //?inputs filters control function
-function inputs_filter(inp, url, button, tit) {
+function inputs_filter(inp, url, button, tit, text) {
   let box = document.querySelector(".ope-box-con");
   button.addEventListener("click", (e) => {
     window.location = "#";
@@ -621,8 +647,12 @@ function inputs_filter(inp, url, button, tit) {
           ele.time,
           ele.baky
         );
+
         mkOperations();
       });
+      if (data.length == 0) {
+        noRes(box, text);
+      }
     }
     if (inp.value.trim() !== "") {
       title.textContent = `${tit} : ${inp.value}`;
@@ -639,7 +669,8 @@ function filterByClientNumber() {
     input,
     ` ../routers/operations/filtring/by_clientNum.php?client_number=`,
     btn,
-    `كل التعاملات على رقم العميل `
+    `كل التعاملات على رقم العميل `,
+    `لا يوجد عمليات مع  هذا الرقم `
   );
 }
 function filterByMoney() {
@@ -649,7 +680,8 @@ function filterByMoney() {
     input,
     ` ../routers/operations/filtring/by_money.php?money=`,
     btn,
-    `كل التعاملات بمبلغ `
+    `كل التعاملات بمبلغ `,
+    `لا يوجد عمليات بهذا المبلغ`
   );
 }
 function filterByAgl() {
@@ -659,7 +691,8 @@ function filterByAgl() {
     input,
     ` ../routers/operations/filtring/by_operationTypeAndBaky.php?operationType=0&baky=`,
     btn,
-    `كل التعاملات بآجل `
+    `كل التعاملات بآجل `,
+    `لا يوجد عمليات  بهذا الآجل`
   );
 }
 function filterByDebt() {
@@ -669,7 +702,8 @@ function filterByDebt() {
     input,
     ` ../routers/operations/filtring/by_operationTypeAndBaky.php?operationType=1&baky=`,
     btn,
-    `كل التعاملات بالدين `
+    `كل التعاملات بالدين `,
+    `لا يوجد عمليات بهذا الدين`
   );
 }
 function filterByDate() {
@@ -679,7 +713,8 @@ function filterByDate() {
     input,
     ` ../routers/operations/filtring/by_dateDay.php?dateDay=`,
     btn,
-    `كل التعاملات بتاريخ `
+    `كل التعاملات بتاريخ `,
+    `لا يوجد عمليات بهذا التاريخ`
   );
 }
 //clickers

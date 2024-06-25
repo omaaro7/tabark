@@ -32,7 +32,7 @@ export const card = (
                       >
                         <div class="ope col-11 px-3 py-3" >
                           <div class="imgContainer col-12 d-flex justify-content-center">
-                            <img src="../assets/imgs/invoice.png" alt="" />
+                            <img src="../assets/imgs/d.png" alt="" />
                           </div>
                           <div class="infoContainer col-12 mt-3">
                             <div class="shop-number-box col-12">
@@ -145,6 +145,12 @@ export const moneyBackSearch = (moneyType , searchType,searchTitle) => {
             </button>
           </div>
         </div>
+  `
+  return item
+}
+export const nores = (text) => {
+  const item = `
+    <div class="nores col-9 text-center rounded-3 py-3 fs-5" style="background: var(--fourth-color);margin: auto;color: var(--main-color);">${text}</div>
   `
   return item
 }

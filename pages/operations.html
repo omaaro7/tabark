@@ -72,7 +72,7 @@
         </div>
         <div class="s-options ch-cli-ope col-12 d-block px-3 py-3 mt-1 d-none">
           <form class="col-12 d-flex justify-content-between clie-view">
-            <input type="text" placeholder="اكتب الرقم" class="col-8" />
+            <input type="number" placeholder="اكتب الرقم" class="col-8" />
             <button class="col-3" type="button">عرض</button>
           </form>
         </div>
@@ -86,7 +86,7 @@
           class="s-options ch-money-ope col-12 d-block px-3 py-3 mt-1 d-none"
         >
           <form class="col-12 d-flex justify-content-between money-view">
-            <input type="text" placeholder="اكتب المبلغ" class="col-8" />
+            <input type="number" placeholder="اكتب المبلغ" class="col-8" />
             <button class="col-3" type="button">عرض</button>
           </form>
         </div>
@@ -97,7 +97,7 @@
         </div>
         <div class="s-options ch-agl-ope col-12 d-block px-3 py-3 mt-1 d-none">
           <form class="col-12 d-flex justify-content-between agl-view">
-            <input type="text" placeholder="اكتب الاجل" class="col-8" />
+            <input type="number" placeholder="اكتب الاجل" class="col-8" />
             <button class="col-3" type="button">عرض</button>
           </form>
         </div>
@@ -108,7 +108,7 @@
         </div>
         <div class="s-options ch-debt-ope col-12 d-block px-3 py-3 mt-1 d-none">
           <form class="col-12 d-flex justify-content-between debt-view">
-            <input type="text" placeholder="اكتب الدين" class="col-8" />
+            <input type="number" placeholder="اكتب الدين" class="col-8" />
             <button class="col-3" type="button">عرض</button>
           </form>
         </div>
@@ -186,9 +186,12 @@
           <div
             class="simCardsShowerMain add col-12 justify-content-center align-items-center d-none"
           >
-            <div
-              class="simCardsShower col-11 col-md-9 col-lg-6 px-3 py-2"
-            ></div>
+            <div class="simCardsShower col-11 col-md-9 col-lg-6 px-3 py-2">
+              <div class="simCards-closer-add simCards-closer position-absolute top-3">
+                <i class="fa-sharp fa-solid fa-circle-xmark"></i>
+              </div>
+              <div class="cards col-12 mt-4 pt-1"></div>
+            </div>
           </div>
           <div
             class="OpeShowerMain add col-12 justify-content-lg-center align-items-center d-none"
@@ -230,9 +233,12 @@
             <div
               class="simCardsShowerMain edit col-12 justify-content-lg-center align-items-center d-none"
             >
-              <div
-                class="simCardsShower col-11 col-md-9 col-lg-6 px-3 py-2"
-              ></div>
+              <div class="simCardsShower col-11 col-md-9 col-lg-6 px-3 py-2">
+                <div class="simCards-closer-edit simCards-closer position-absolute top-3">
+                  <i class="fa-sharp fa-solid fa-circle-xmark"></i>
+                </div>
+                <div class="cards col-12 mt-4 pt-1"></div>
+              </div>
             </div>
             <div
               class="OpeShowerMain edit col-12 justify-content-center align-items-center d-none"
@@ -340,7 +346,7 @@
         "
       ></div>
       <div
-        class="show-number-container d-none align-items-center justify-content-center col-12 "
+        class="show-number-container d-none align-items-center justify-content-center col-12"
         style="
           position: fixed;
           z-index: 20000;
@@ -349,9 +355,7 @@
           left: 0;
           height: 100%;
         "
-      >
-        
-      </div>
+      ></div>
     </section>
     <div class="returner d-none">
       <i class="fa-light fa-angle-up"></i>

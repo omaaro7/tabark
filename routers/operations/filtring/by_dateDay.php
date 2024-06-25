@@ -25,7 +25,6 @@ function getDataByDateDay($dateDay) {
     $sql = "SELECT * FROM operations WHERE dateDay = '$dateDay'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
         // Fetching data row by row
         $data = array();
         while($row = $result->fetch_assoc()) {
@@ -34,10 +33,7 @@ function getDataByDateDay($dateDay) {
         // Sending JSON response
         header('Content-Type: application/json');
         echo json_encode($data);
-    } else {
-        // Sending error response if no data found
-        echo "No data found";
-    }
+    
 }
 
 // Check if dateDay parameter is set in GET request

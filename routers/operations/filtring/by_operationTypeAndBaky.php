@@ -15,7 +15,8 @@ if ($conn->connect_error) {
 }
 
 // API endpoint to get data by operationType and baky
-function getDataByOperationTypeAndBaky($operationType, $baky) {
+function getDataByOperationTypeAndBaky($operationType, $baky)
+{
     global $conn;
 
     // Sanitize input to prevent SQL injection
@@ -26,23 +27,19 @@ function getDataByOperationTypeAndBaky($operationType, $baky) {
     $sql = "SELECT * FROM operations WHERE operationType = '$operationType' AND baky = '$baky'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        // Fetching data row by row
-        $data = array();
-        while($row = $result->fetch_assoc()) {
-            $data[] = $row;
-        }
-        // Sending JSON response
-        header('Content-Type: application/json');
-        echo json_encode($data);
-    } else {
-        // Sending error response if no data found
-        echo "No data found";
+    // Fetching data row by row
+    $data = array();
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
     }
+    // Sending JSON response
+    header('Content-Type: application/json');
+    echo json_encode($data);
+
 }
 
 // Check if operationType and baky parameters are set in GET request
-if(isset($_GET['operationType']) && isset($_GET['baky'])) {
+if (isset($_GET['operationType']) && isset($_GET['baky'])) {
     $operationType = $_GET['operationType'];
     $baky = $_GET['baky'];
     getDataByOperationTypeAndBaky($operationType, $baky);
