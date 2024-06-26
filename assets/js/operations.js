@@ -85,7 +85,7 @@ async function createOperationCards() {
   let res = await fetch(" ../routers/operations/get_operations.php");
   let data = await res.json();
   if (data.length == 0) {
-    noRes(box, "لا يوجد اي عمليه");
+    noRes(box, "لا يوجد اي عمليه", "9");
   }
   let each = await data.forEach((ele, index) => {
     box.innerHTML += card(
@@ -106,42 +106,36 @@ async function createOperationCards() {
 
 //safes managment
 function sendMoneyToAllSafs(i) {
-  function manageDates(date, value) {
-    let DateString = date;
-    var parts = DateString.split("/");
-    var Month = parseInt(parts[0], 10);
-    var Day = parseInt(parts[1], 10);
-    var Year = parseInt(parts[2], 10);
-    var dateObject = new Date(Year, Month - 1, Day);
-    var customDateObject = dateObject.setDate(dateObject.getDate() + value);
-    var StartnumericValue = dateObject.getTime();
-    return [StartnumericValue, customDateObject];
-  }
   fetch(` ../routers/safes/get_safe.php?id=${i}`)
     .then((res) => res.json())
     .then((data) => {
       let startDate = data.startDate;
       let endDate = data.endDate;
-      var StartnumericValue = manageDates(data.startDate, 0)[0];
-      console.log(StartnumericValue);
-      var endnumericValue = manageDates(data.endDate, 0)[0];
-      console.log(endnumericValue);
-      console.log(endDate, data.endDate);
-      const After = manageDates(getCurrentDate(), 0)[0];
+      var endnumericValue = endDate.split("/");
+      var After = getCurrentDate().split("/");
+      if (endnumericValue[0].length == 1) {
+        endnumericValue[0] = "0" + endnumericValue[0];
+      }
+      if (After[0].length == 1) {
+        After[0] = "0" + After[0];
+      }
+      const endVal = parseInt(endnumericValue.reverse().join(""));
+      const AfterVal = parseInt(After.reverse().join(""));
+      console.log(AfterVal, endVal);
       const day = () => {
-        if (After == endnumericValue || After > endnumericValue) {
+        if (AfterVal == endVal || AfterVal > endVal) {
           startDate = getCurrentDate();
           endDate = getDateAfterOneDay();
         }
       };
       const week = () => {
-        if (After == endnumericValue || After > endnumericValue) {
+        if (AfterVal == endVal || AfterVal > endVal) {
           startDate = getCurrentDate();
           endDate = getDateAfterOneWeek();
         }
       };
       const month = () => {
-        if (After == endnumericValue || After > endnumericValue) {
+        if (AfterVal == endVal || AfterVal > endVal) {
           startDate = getCurrentDate();
           endDate = getDateAfterOneMonth();
         }
@@ -177,8 +171,8 @@ function sendMoneyToAllSafs(i) {
 }
 
 //left section
-function noRes(box, text) {
-  box.innerHTML = nores(text);
+function noRes(box, text, size) {
+  box.innerHTML = nores(text, size);
 }
 function showShopSimCards(clicker, box, func, t) {
   let items;
@@ -195,7 +189,11 @@ function showShopSimCards(clicker, box, func, t) {
             box.firstElementChild.lastElementChild.innerHTML += item;
           });
           if (data.length == 0) {
-            noRes(box.firstElementChild.lastElementChild, "لم يتم اضافة خطوط");
+            noRes(
+              box.firstElementChild.lastElementChild,
+              "لم يتم اضافة خطوط",
+              "11"
+            );
           }
           items = document.querySelectorAll(".itm");
           items.forEach((ele) => {
@@ -483,7 +481,7 @@ function putSimCardsNumbers() {
     .then((data) => {
       let simsC;
       if (data.length == 0) {
-        noRes(box, "لا يوجد خطوط");
+        noRes(box, "لا يوجد خطوط", "12");
       }
       data.map((ele, index) => {
         let mt = "";
@@ -528,7 +526,7 @@ function gAllCards() {
     .then((res) => res.json())
     .then((data) => {
       if (data.length === 0) {
-        noRes(box, "لا يوجد اي عمليات");
+        noRes(box, "لا يوجد اي عمليات", "9");
       } else {
         window.location = "#";
         data.forEach((ele) => {
@@ -587,7 +585,7 @@ function filterByOperationType() {
       text.shift();
       text.shift();
       text.shift();
-      noRes(box, `لا توجد عمليات ${text.join("")}`);
+      noRes(box, `لا توجد عمليات ${text.join("")}`, "9");
     }
     window.location = "#";
     title.textContent = `عمليات : ${oper}`;
@@ -614,7 +612,7 @@ function filterBySimCard(nums) {
           );
         });
         if (data.length == 0) {
-          noRes(box, `لا توجد اي عمليات على هذا الخط`);
+          noRes(box, `لا توجد اي عمليات على هذا الخط`, "9");
         }
         mkOperations();
       });
@@ -651,7 +649,7 @@ function inputs_filter(inp, url, button, tit, text) {
         mkOperations();
       });
       if (data.length == 0) {
-        noRes(box, text);
+        noRes(box, text, "9");
       }
     }
     if (inp.value.trim() !== "") {
@@ -741,13 +739,16 @@ async function moneyBackSearchControler(
   if (ind < 2) {
     let url = ``;
     let parameter = "";
+    let tt = "";
     if (ind == 0) {
       url = `../routers/operations/filtring/by_clientNumAndBaky.php`;
       parameter = "client_number";
+      tt = "هذا الرقم";
     }
     if (ind == 1) {
       url = `../routers/operations/filtring/by_operationTypeAndBaky.php`;
       parameter = "baky";
+      tt = "هذه القيمه";
     }
     let box = document.querySelector(".show-number-container");
     console.log(box);
@@ -761,7 +762,6 @@ async function moneyBackSearchControler(
         `${url}?${parameter}=${searchInput.value.trim()}&operationType=${ope}`
       );
       const data = await res.json();
-      console.log(data);
       searchInput.value = "";
       box.classList.replace("d-flex", "d-none");
       retBox.firstElementChild.lastElementChild.innerHTML = "";
@@ -773,6 +773,14 @@ async function moneyBackSearchControler(
           ms
         );
       });
+      if (data.length == 0) {
+        noRes(
+          retBox.firstElementChild.lastElementChild,
+          `لا يوجد نتائج ب${tt}`,
+          "12"
+        );
+      }
+      console.log(data);
     });
     close(
       document.querySelector(".show-number-container .closer i"),
@@ -794,6 +802,9 @@ async function moneyBackSearchControler(
           ms
         );
       });
+      if (data.length == 0) {
+        noRes(retBox.firstElementChild.lastElementChild, "لا توجد نتائج", "12");
+      }
     }
     gAllBaky();
   }
@@ -935,6 +946,9 @@ async function dt(url, closer, box, ms) {
       ms
     );
   });
+  if (data.length == 0) {
+    noRes(box.firstElementChild.lastElementChild, "لا توجد نتائج", "12");
+  }
   close(closer, box, true);
 }
 async function ret(ope, box, closer) {

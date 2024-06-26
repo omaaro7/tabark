@@ -148,9 +148,9 @@ export const moneyBackSearch = (moneyType , searchType,searchTitle) => {
   `
   return item
 }
-export const nores = (text) => {
+export const nores = (text,size) => {
   const item = `
-    <div class="nores col-9 text-center rounded-3 py-3 fs-5" style="background: var(--fourth-color);margin: auto;color: var(--main-color);">${text}</div>
+    <div class="nores col-${size} text-center rounded-3 py-3 fs-5" style="background: var(--fourth-color);margin: auto;color: var(--main-color);">${text}</div>
   `
   return item
 }
